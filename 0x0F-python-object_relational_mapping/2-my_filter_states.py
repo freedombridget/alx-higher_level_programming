@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""List states Module"""
+"""Filter states Module"""
 import MySQLdb
 from sys import argv
 
@@ -13,7 +13,9 @@ if __name__ == "__main__":
             db=argv[3])
 
     cursor = db.cursor()
-    cursor.execute("SELECT * FROM states ORDER BY states.id ASC")
+    query = """SELECT * FROM states WHERE states.name LIKE BINARY '{}' ORDER BY
+                    states.id ASC""".format(argv[4])
+    cursor.execute(query)
     rows = cursor.fetchall()
     for row in rows:
         print(row)
